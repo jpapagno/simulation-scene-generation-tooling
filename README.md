@@ -25,17 +25,17 @@ The script launches an empty `SimulationContext`, resets it, and steps until the
 
 ### Options
 
-- `--dt <seconds>`: simulation time step (default `0.01`, must be positive).
-- `--duration <seconds>`: run for this long, then exit cleanly. `0` (the default) runs until the simulator is closed or Ctrl+C is pressed.
+- `--dt SECONDS` — simulation timestep (must be positive, default `0.01`).
+- `--duration SECONDS` — stop after this many simulated seconds instead of running until stopped. Useful for headless or scripted runs, e.g. `python scripts/launch_simulation.py --duration 5`.
 
-Scene settings are collected in `scripts/scene_config.py` (`SceneConfig`), so new options can be added there without touching the launcher.
+Press Ctrl+C or close the simulator window to stop; the launcher shuts down gracefully and logs how many steps ran.
 
 ## Project layout
 
 ```text
 scripts/
-├── launch_simulation.py
-└── scene_config.py
+├── launch_simulation.py   # entry point: parses args, launches and steps the sim
+└── scene_config.py        # tiny helpers: option validation and SimulationCfg builder
 ```
 
 ## References
