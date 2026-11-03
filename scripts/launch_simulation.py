@@ -14,7 +14,6 @@ except ImportError:  # running with the repo root on sys.path instead
 
 logger = logging.getLogger(__name__)
 
-
 def parse_args(argv=None) -> argparse.Namespace:
     """Parse launcher and simulation options.
 
@@ -36,13 +35,18 @@ def parse_args(argv=None) -> argparse.Namespace:
         metavar="SECONDS",
         help="Stop after this many simulated seconds (omit to run until stopped).",
     )
+    parser.add_argument(
+        "--log-level",
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR"],
+        help="Logging verbosity (default INFO).",
+    )
     return parser.parse_args(argv)
-
 
 def main() -> None:
     """Launch Isaac Sim and step the empty scene until the app closes."""
-    logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
     args = parse_args()
+    logging.basicConfig(level=getattr(logging, args.log_level), format="[%(levelname)s] %(message)s")
 
     import isaaclab.sim as sim_utils
 

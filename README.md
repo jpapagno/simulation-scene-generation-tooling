@@ -25,10 +25,19 @@ The script launches an empty `SimulationContext`, resets it, and steps until the
 
 ### Options
 
-- `--dt SECONDS` — simulation timestep (must be positive, default `0.01`).
+- `--dt SECONDS` — simulation timestep (must be positive and finite, default `0.01`).
 - `--duration SECONDS` — stop after this many simulated seconds instead of running until stopped. Useful for headless or scripted runs, e.g. `python scripts/launch_simulation.py --duration 5`.
+- `--log-level LEVEL` — logging verbosity: `DEBUG`, `INFO`, `WARNING`, or `ERROR` (default `INFO`).
 
 Press Ctrl+C or close the simulator window to stop; the launcher shuts down gracefully and logs how many steps ran.
+
+## Tests
+
+The `scene_config` helpers have a small stdlib test suite (no extra dependencies):
+
+```powershell
+python -m unittest discover -s tests
+```
 
 ## Project layout
 
@@ -36,6 +45,8 @@ Press Ctrl+C or close the simulator window to stop; the launcher shuts down grac
 scripts/
 ├── launch_simulation.py   # entry point: parses args, launches and steps the sim
 └── scene_config.py        # tiny helpers: option validation and SimulationCfg builder
+tests/
+└── test_scene_config.py   # stdlib unit tests for the scene_config helpers
 ```
 
 ## References

@@ -7,12 +7,14 @@ scene, so the launcher itself stays focused on running the simulation.
 
 from __future__ import annotations
 
+import math
+
 
 def positive_float(value: str) -> float:
-    """Argparse type that accepts only strictly positive floats."""
+    """Argparse type that accepts only strictly positive, finite floats."""
     number = float(value)
-    if number <= 0:
-        raise ValueError(f"expected a positive number, got {value!r}")
+    if not math.isfinite(number) or number <= 0:
+        raise ValueError(f"expected a positive, finite number, got {value!r}")
     return number
 
 
@@ -34,4 +36,8 @@ def max_steps(duration: float | None, dt: float) -> int | None:
     """
     if duration is None:
         return None
+    if not math.isfinite(duration) or duration <= 0:
+        raise ValueError(f"expected a positive, finite duration, got {duration!r}")
+    if not math.isfinite(dt) or dt <= 0:
+        raise ValueError(f"expected a positive, finite timestep, got {dt!r}")
     return max(1, int(round(duration / dt)))
