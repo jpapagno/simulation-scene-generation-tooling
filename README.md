@@ -23,11 +23,19 @@ Alternatively, use the Isaac Lab launcher from its repository root:
 
 The script launches an empty `SimulationContext`, resets it, and steps until the simulator is closed. Launcher options such as `--device` are available; run the script with `--help` for the full list.
 
+### Options
+
+- `--dt <seconds>`: simulation time step (default `0.01`, must be positive).
+- `--duration <seconds>`: run for this long, then exit cleanly. `0` (the default) runs until the simulator is closed or Ctrl+C is pressed.
+
+Scene settings are collected in `scripts/scene_config.py` (`SceneConfig`), so new options can be added there without touching the launcher.
+
 ## Project layout
 
 ```text
 scripts/
-└── launch_simulation.py
+├── launch_simulation.py
+└── scene_config.py
 ```
 
 ## References
