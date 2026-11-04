@@ -1,15 +1,12 @@
-"""Stdlib unit tests for the scene_config helpers.
+"""Stdlib unit tests for the scenegen.scene_config helpers.
 
 Run with: python -m unittest discover -s tests
+(requires the package installed: pip install -e .)
 """
 
-import sys
 import unittest
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-
-from scene_config import max_steps, positive_float
+from scenegen.scene_config import max_steps, positive_float
 
 
 class PositiveFloatTests(unittest.TestCase):

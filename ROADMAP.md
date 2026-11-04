@@ -20,11 +20,13 @@ golden-scene test (T35) passes for every backend.
 
 ## Current state
 
-As of 2026-11-03 the repo is a minimal Isaac Lab starter: an empty-simulation
-launcher (`scripts/launch_simulation.py`) with validated `--dt` / `--duration`,
-`--log-level`, graceful Ctrl+C shutdown, a `scripts/scene_config.py` helper,
-and stdlib tests. There is no YAML input, no scene model, no backend other
-than Isaac Lab, no assets, no randomization, and no data capture yet.
+As of 2026-11-04 the repo is packaged as `scenegen` (T01 done):
+`pip install -e .` installs the `scenegen` console script, the core is
+stdlib-only and imports without Isaac Lab installed, and the launcher
+lives in `src/scenegen/cli.py` with `scripts/launch_simulation.py` kept as
+a thin shim for the Isaac Lab `-p` workflow. There is no YAML input, no
+scene model, no backend other than Isaac Lab, no assets, no
+randomization, and no data capture yet.
 
 ## Architecture
 
