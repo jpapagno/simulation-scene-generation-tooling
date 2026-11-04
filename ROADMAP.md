@@ -20,11 +20,13 @@ golden-scene test (T35) passes for every backend.
 
 ## Current state
 
-As of 2026-11-04 the repo is packaged as `scenegen` (T01 done):
-`pip install -e .` installs the `scenegen` console script, the core is
-stdlib-only and imports without Isaac Lab installed, and the launcher
-lives in `src/scenegen/cli.py` with `scripts/launch_simulation.py` kept as
-a thin shim for the Isaac Lab `-p` workflow. There is no YAML input, no
+As of 2026-11-04 the repo is packaged as `scenegen` (T01 done) with no
+import path tricks left (T02 done): `pip install -e .` installs the
+`scenegen` console script, the core is stdlib-only and imports without
+Isaac Lab installed from any working directory, and the launcher lives
+in `src/scenegen/cli.py` with `scripts/launch_simulation.py` kept as a
+thin shim for the Isaac Lab `-p` workflow. A regression test imports
+`scenegen` from an unrelated directory. There is no YAML input, no
 scene model, no backend other than Isaac Lab, no assets, no
 randomization, and no data capture yet.
 

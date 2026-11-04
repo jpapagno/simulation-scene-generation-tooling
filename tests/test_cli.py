@@ -9,6 +9,7 @@ so they prove the installed command works without Isaac Lab installed.
 
 import subprocess
 import sys
+import tempfile
 import unittest
 
 from scenegen import __version__
@@ -55,6 +56,19 @@ class EntryPointTests(unittest.TestCase):
             capture_output=True,
             text=True,
         )
+        self.assertEqual(proc.returncode, 0)
+        self.assertIn(__version__, proc.stdout)
+
+    def test_imports_from_any_working_directory(self):
+        # T02: no sys.path edits — the installed package must import from
+        # any working directory, not just the repo root.
+        with tempfile.TemporaryDirectory() as tmpdir:
+            proc = subprocess.run(
+                [sys.executable, "-c", "import scenegen; print(scenegen.__version__)"],
+                capture_output=True,
+                text=True,
+                cwd=tmpdir,
+            )
         self.assertEqual(proc.returncode, 0)
         self.assertIn(__version__, proc.stdout)
 
