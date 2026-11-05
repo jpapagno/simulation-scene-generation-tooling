@@ -70,16 +70,25 @@ python -m unittest discover -s tests
 
 ## Project layout
 
+The core package is stdlib-only and imports without any simulator: all
+simulator code lives behind the backend layer in `src/scenegen/backends/`
+(T03), so `import scenegen` and the core test suite pass with `isaaclab`
+absent. A test scans the core for simulator imports to keep it that way.
+
 ```text
 pyproject.toml            # packaging: src layout, scenegen console script
 src/scenegen/
 ├── __init__.py           # package version
 ├── __main__.py           # `python -m scenegen`
-├── cli.py                # entry point: parses args, launches and steps the sim
-└── scene_config.py       # tiny helpers: option validation and SimulationCfg builder
+├── backends/
+│   ├── __init__.py       # backend registry (lazy loading)
+│   └── isaaclab.py      # Isaac Lab backend: launcher flags, SimulationCfg, launch loop
+├── cli.py                # entry point: parses args, hands off to the backend
+└── scene_config.py       # core utilities: option validation and step counts
 scripts/
 └── launch_simulation.py  # thin shim for the Isaac Lab `-p <script>` workflow
 tests/
+├── test_backends.py      # tests for the backend layer and the no-simulator rule
 ├── test_cli.py           # tests for the scenegen entry point
 └── test_scene_config.py  # tests for the scene_config helpers
 ```

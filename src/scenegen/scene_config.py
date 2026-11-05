@@ -1,8 +1,11 @@
-"""Small helpers for configuring the empty simulation scene.
+"""Core helpers for configuring a simulation run.
 
-Kept deliberately tiny: this module only validates the numeric options
-the launcher accepts and builds the ``SimulationCfg`` for the empty
-scene, so the launcher itself stays focused on running the simulation.
+This module is core code: it is stdlib-only and never imports a simulator
+(see ROADMAP.md design rule 1). It keeps the small pure utilities the
+launcher needs — validating numeric options and turning a duration into a
+step count. Anything simulator-specific lives behind the backend layer
+(``scenegen.backends``); the Isaac Lab ``SimulationCfg`` builder moved to
+``scenegen.backends.isaaclab`` with T03.
 """
 
 from __future__ import annotations
@@ -16,17 +19,6 @@ def positive_float(value: str) -> float:
     if not math.isfinite(number) or number <= 0:
         raise ValueError(f"expected a positive, finite number, got {value!r}")
     return number
-
-
-def build_simulation_cfg(device: str, dt: float):
-    """Build the simulation config for an empty scene.
-
-    The Isaac Lab import is deferred until this is called so importing
-    this module never requires the simulator to be running.
-    """
-    from isaaclab.sim import SimulationCfg
-
-    return SimulationCfg(device=device, dt=dt)
 
 
 def max_steps(duration: float | None, dt: float) -> int | None:
